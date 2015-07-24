@@ -1,6 +1,7 @@
 package com.tantofish.androidcourseproject1;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
@@ -29,12 +32,30 @@ public class InstagramPhotoAdapter extends ArrayAdapter<InstagramPhoto> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_layout, parent, false);
         }
 
-        TextView tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
-        ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
+        TextView tvCaption  = (TextView) convertView.findViewById(R.id.tvCaption);
+        TextView tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
+        TextView tvLikes    = (TextView) convertView.findViewById(R.id.tvLikes);
+
+        ImageView ivUserPhoto = (ImageView) convertView.findViewById(R.id.ivUserPhoto);
+        ImageView ivPhoto     = (ImageView) convertView.findViewById(R.id.ivPhoto);
 
         tvCaption.setText(photo.caption);
+        tvUsername.setText(photo.username);
+        tvLikes.setText(photo.likeCount+" Bravos");
         ivPhoto.setImageResource(0);
-        Picasso.with(getContext()).load(photo.imageUrl).into(ivPhoto);
+        ivUserPhoto.setImageResource(0);
+
+
+
+        int length = Math.min(photo.imageHeight, photo.imageWidth);
+        Picasso.with(getContext()).load(photo.imageUrl).resize(length, length).centerCrop().into(ivPhoto);
+        Transformation roundTransform = new RoundedTransformationBuilder()
+                .borderColor(Color.GRAY)
+                .borderWidthDp(1)
+                .cornerRadiusDp(30)
+                .oval(false)
+                .build();
+        Picasso.with(getContext()).load(photo.userPhotoUrl).transform(roundTransform).into(ivUserPhoto);
 
         return convertView;
     }
