@@ -16,5 +16,5 @@ Completed user stories:
  * [ ] Bonus: Allow user to view all comments for an image within a dialog fragment
 
 Walkthrough of user stories:
-![Video Walkthrough](InstagramClient.gif)
+![Video Walkthrough](demo.gif)
 
