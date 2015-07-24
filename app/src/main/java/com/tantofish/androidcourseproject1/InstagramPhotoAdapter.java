@@ -41,21 +41,29 @@ public class InstagramPhotoAdapter extends ArrayAdapter<InstagramPhoto> {
 
         tvCaption.setText(photo.caption);
         tvUsername.setText(photo.username);
-        tvLikes.setText(photo.likeCount+" Bravos");
+        tvLikes.setText(photo.likeCount + " Bravos");
         ivPhoto.setImageResource(0);
         ivUserPhoto.setImageResource(0);
 
-
-
         int length = Math.min(photo.imageHeight, photo.imageWidth);
-        Picasso.with(getContext()).load(photo.imageUrl).resize(length, length).centerCrop().into(ivPhoto);
+        Picasso.with(getContext())
+                .load(photo.imageUrl)
+                .resize(length, length)
+                .centerCrop()
+                .placeholder(R.drawable.placeholder)
+                .into(ivPhoto);
+
         Transformation roundTransform = new RoundedTransformationBuilder()
                 .borderColor(Color.GRAY)
                 .borderWidthDp(1)
                 .cornerRadiusDp(30)
                 .oval(false)
                 .build();
-        Picasso.with(getContext()).load(photo.userPhotoUrl).transform(roundTransform).into(ivUserPhoto);
+        Picasso.with(getContext())
+                .load(photo.userPhotoUrl)
+                .transform(roundTransform)
+                .placeholder(R.drawable.ic_instagram)
+                .into(ivUserPhoto);
 
         return convertView;
     }
